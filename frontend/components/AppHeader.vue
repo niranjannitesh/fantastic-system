@@ -10,9 +10,9 @@
           </div>
         </div>
         <div class="flex items-center">
-          <button class="inline-flex items-center mr-1">
+          <router-link to='/scan' class="inline-flex items-center mr-1">
             <img src="@/assets/icons/camera-icon.svg" alt="search" width="48" height="48">
-          </button>
+          </router-link>
           <button class="inline-flex items-center mr-1" @click="search = true">
             <img src="@/assets/icons/icon-search.svg" alt="search">
           </button>

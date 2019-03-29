@@ -1,99 +1,15 @@
 <template>
-  <div>
-    <!-- Camera sensor -->
-    <canvas id="camera--sensor"></canvas>
-
-    <!-- Camera view -->
-    <video id="camera--view" autoplay playsinline></video>
-
-    <!-- Camera output -->
-    <img src="//:0" alt="" id="camera--output">
-
-    <!-- Camera trigger -->
-    <button id="camera--trigger">Take a picture</button>
-
-    <button class="fixed rounded-full bg-white z-50 close-button p-1" @click="close"><img class="block" src="@/assets/icons/icon-dismiss.svg"></button>
+  <div class="flex items-center justify-center min-h-screen flex-col">
+    <img src="" alt="">
+    <input type="file">
   </div>
 </template>
 
 <script>
 export default {
   layout: 'empty',
-  mounted() {
-    var constraints = { video: { facingMode: "user" }, audio: false };
-    var track = null;
-
-    // Define constants
-    const cameraView = document.querySelector("#camera--view"),
-        cameraOutput = document.querySelector("#camera--output"),
-        cameraSensor = document.querySelector("#camera--sensor"),
-        cameraTrigger = document.querySelector("#camera--trigger");
-
-    // Access the device camera and stream to cameraView
-    function cameraStart() {
-        navigator.mediaDevices
-            .getUserMedia(constraints)
-            .then(function(stream) {
-                track = stream.getTracks()[0];
-                cameraView.srcObject = stream;
-            })
-            .catch(function(error) {
-                console.error("Oops. Something is broken.", error);
-            });
-    }
-
-    // Take a picture when cameraTrigger is tapped
-    cameraTrigger.onclick = function() {
-        cameraSensor.width = cameraView.videoWidth;
-        cameraSensor.height = cameraView.videoHeight;
-        cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
-        cameraOutput.src = cameraSensor.toDataURL("image/webp");
-        cameraOutput.classList.add("taken");
-        // track.stop();
-    };
-
-    // Start the video stream when the window loads
-    window.addEventListener("load", cameraStart, false);
-  }
 }
 </script>
 
 <style>
-#camera, #camera--view, #camera--sensor, #camera--output{
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-}
-
-#camera--view, #camera--sensor, #camera--output{
-  transform: scaleX(-1);
-  filter: FlipH;
-}
-
-#camera--trigger{
-  width: 200px;
-  background-color: black;
-  color: white;
-  font-size: 16px;
-  border-radius: 30px;
-  border: none;
-  padding: 15px 20px;
-  text-align: center;
-  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
-  position: fixed;
-  bottom: 30px;
-  left: calc(50% - 100px);
-}
-
-.taken{
-  transition: all 0.5s ease-in;
-  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
-  z-index: 2;
-}
-
-.close-button {
-  top: 10px;
-  left: 10px;
-}
 </style>
