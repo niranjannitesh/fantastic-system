@@ -1,0 +1,93 @@
+@tailwind preflight;
+@tailwind components;
+
+.body-content {
+  min-height: calc(100vh - 250px);
+}
+
+.header-link {
+  @apply mr-1 text-sm text-white no-underline;
+}
+
+.header-tab {
+  @apply inline-block p-4 text-grey no-underline text-sm;
+}
+
+.header-tab.active {
+  color: #ed54a4;
+  box-shadow: inset 0 -4px 0 0 #ed54a4;
+}
+
+.footer-icon {
+  @apply rounded-full w-7 h-7 inline-block;
+  border: 1px solid #e6e6e6;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+
+.apple-icon {
+  background-image: url('../icons/apple-icon.svg');
+}
+
+.play-icon {
+  background-image: url('../icons/play-icon.svg');
+}
+
+.facebook-icon {
+  background-image: url('../icons/facebook-icon.svg');
+}
+
+.twitter-icon {
+  background-image: url('../icons/twitter-icon.svg');
+}
+
+.instagram-icon {
+  background-image: url('../icons/instagram-icon.svg');
+}
+
+.pinterest-icon {
+  background-image: url('../icons/pinterest-icon.svg');
+}
+
+.footer-apps-link:hover .apple-icon {
+  background-image: url('../icons/apple-icon-pink.svg');
+}
+
+.footer-apps-link:hover .play-icon {
+  background-image: url('../icons/play-icon-pink.svg');
+}
+
+.footer-apps-link:hover .facebook-icon {
+  background-image: url('../icons/facebook-icon-pink.svg');
+}
+
+.footer-apps-link:hover .twitter-icon {
+  background-image: url('../icons/twitter-icon-pink.svg');
+}
+
+.footer-apps-link:hover .instagram-icon {
+  background-image: url('../icons/instagram-icon-pink.svg');
+}
+
+.footer-apps-link:hover .pinterest-icon {
+  background-image: url('../icons/pinterest-icon-pink.svg');
+}
+
+.mobile-search {
+  @apply absolute pin-b pin-l pin-r;
+  top: 56px;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.mobile-search-cancel {
+  @apply absolute;
+  top: 25%;
+  right: 10px;
+}
+
+.mobile-search-cancel img {
+  @apply block;
+}
+
+@tailwind utilities;
