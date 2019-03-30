@@ -2,7 +2,7 @@
 @tailwind components;
 
 .body-content {
-  min-height: calc(100vh - 250px);
+  min-height: calc(100vh - 56px);
 }
 
 .header-link {
