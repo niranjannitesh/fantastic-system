@@ -13,6 +13,7 @@ var flash = require("connect-flash");
 var mongo = require("mongodb");
 var mongoose = require("mongoose");
 var randomstring = require("randomstring");
+var cors = require('cors');
 
 var db = mongoose.connection;
 
@@ -32,6 +33,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+app.use(cors())
 
 app.use(session({
     secret:"secret",
