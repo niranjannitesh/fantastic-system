@@ -56,7 +56,7 @@ let colors = {
 
   'blue-light': '#e0f5fb',
 
-  'pink': '#7E57C2',
+  'blue': '#4d39ec',
 }
 
 module.exports = {
