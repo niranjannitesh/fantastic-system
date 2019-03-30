@@ -3,8 +3,17 @@ var uniqueValidator = require("mongoose-unique-validator");
 var bcrypt = require("bcrypt");
 var SALT_WORK_FACTOR = 10;
 
-mongoose.connect('mongodb://localhost:27017/medicapp')
 
+const uri = "mongodb+srv://himanshu:Himanshu103@cluster0-drmqc.mongodb.net/test?retryWrites=true"
+mongoose.connect(uri, function(err, client) {
+   if(err) {
+        console.log('Error occurred while connecting to MongoDB Atlas...\n',err);
+   }
+   console.log('Connected...');
+   const collection = client.db("medicapp").collection("devices");
+   // perform actions on the collection object
+   client.close();
+});
 var Schema = mongoose.Schema;
 
 var medicationSchema = new Schema({
@@ -14,7 +23,8 @@ var medicationSchema = new Schema({
 	// dosage time in the format like number_L/D/B
 	dosage : {
 		type: String
-	}
+	},
+	_id : false
 });
 
 var checkUpHistorySchema = new Schema({
@@ -27,7 +37,8 @@ var checkUpHistorySchema = new Schema({
 		rating: {
 			type : Number
 		},
-		medications: [medicationSchema]
+		medications: [medicationSchema],
+		_id : false
 });
 
 var futureAppointmentsSchema = new Schema({
@@ -36,12 +47,17 @@ var futureAppointmentsSchema = new Schema({
 	},
 	doctorLicenseId : {
 		type: String
-	}
+	},
+	_id : false
 })
 
 var userSchema = new Schema({
 	name: {
 		type: String
+	},
+	userType : {
+		type : String,
+		deault : "patient"
 	},
 	username: {
 		type: String,
@@ -60,11 +76,6 @@ var userSchema = new Schema({
 		type: String,
 		required : true,
 	},
-	phoneNumber: {
-		type: Number,
-		required : true,
-	},
-	eatingHabit : [],
 	checkupHistory: [checkUpHistorySchema],
 	futureAppointments: [futureAppointmentsSchema]
 });
@@ -73,7 +84,7 @@ userSchema.plugin(uniqueValidator);
 
 var User = module.exports = mongoose.model("User", userSchema);
 var Medication = mongoose.model("Medication", medicationSchema);
-var CheckupHistory = mongoose.model("CheckupHistory", checkUpHistorychema);
+var CheckupHistory = mongoose.model("CheckupHistory", checkUpHistorySchema);
 var FutureAppointment = mongoose.model("FutureAppointment", futureAppointmentsSchema);
 
 module.exports.createUser = function(newUser, callback) {

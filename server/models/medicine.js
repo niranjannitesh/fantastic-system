@@ -3,8 +3,17 @@ var uniqueValidator = require("mongoose-unique-validator");
 var bcrypt = require("bcrypt");
 var SALT_WORK_FACTOR = 10;
 
-mongoose.connect('mongodb://localhost:27017/medicapp')
 
+const uri = "mongodb+srv://himanshu:Himanshu103@cluster0-drmqc.mongodb.net/test?retryWrites=true"
+mongoose.connect(uri, function(err, client) {
+   if(err) {
+        console.log('Error occurred while connecting to MongoDB Atlas...\n',err);
+   }
+   console.log('Connected...');
+   const collection = client.db("medicapp").collection("devices");
+   // perform actions on the collection object
+   client.close();
+});
 var db = mongoose.connection;
 
 var Schema = mongoose.Schema;
