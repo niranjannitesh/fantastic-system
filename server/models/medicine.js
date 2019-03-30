@@ -27,7 +27,7 @@ var medicineSchema = new Schema({
 	},
 	packagingType : {
 		type : String
-	}
+	},
 	vendors : []
 });
 
