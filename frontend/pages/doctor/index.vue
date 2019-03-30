@@ -19,7 +19,9 @@
 
 <script>
 export default {
-  layout: 'tab'
+  layout: 'tab-doc',
+  components: {
+  }
 }
 </script>
 
