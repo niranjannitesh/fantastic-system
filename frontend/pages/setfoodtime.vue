@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="bg-blue text-white py-4 text-center shadow">
-      Set Medicine Reminder
+      Set Food Time
     </div>
     <div class="p-4">
       <div class="mt-4">

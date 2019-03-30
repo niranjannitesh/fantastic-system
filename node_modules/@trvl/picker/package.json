@@ -1,0 +1,65 @@
+{
+  "name": "@trvl/picker",
+  "version": "0.5.1",
+  "description": "A responsive Vue.js datepicker component.",
+  "author": "Osinga <osinga@users.noreply.github.com>",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --formats umd-min --name picker --target lib src/TRVLPicker.vue",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "portal-vue": "^1.5.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.3.0",
+    "@vue/cli-plugin-eslint": "^3.3.0",
+    "@vue/cli-plugin-unit-jest": "^3.3.0",
+    "@vue/cli-service": "^3.3.1",
+    "@vue/eslint-config-airbnb": "^4.0.0",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "eslint": "^5.12.1",
+    "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "vue": "^2.5.22",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "bugs": {
+    "url": "https://github.com/TRVL/picker/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/TRVL/picker#readme",
+  "keywords": [
+    "vue",
+    "datepicker"
+  ],
+  "license": "MIT",
+  "main": "dist/picker.umd.min.js",
+  "peerDependencies": {
+    "vue": "^2.5.22"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TRVL/picker"
+  }
+}
