@@ -1,3 +1,8 @@
 @tailwind preflight;
 @tailwind components;
+
+.input:focus-within {
+  @apply border-blue;
+}
+
 @tailwind utilities;
