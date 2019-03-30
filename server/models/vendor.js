@@ -3,22 +3,24 @@ var uniqueValidator = require("mongoose-unique-validator");
 var bcrypt = require("bcrypt");
 var SALT_WORK_FACTOR = 10;
 
-const uri = "mongodb+srv://himanshu:Himanshu103@cluster0-drmqc.mongodb.net/test?retryWrites=true"
-mongoose.connect(uri, function(err, client) {
-   if(err) {
-        console.log('Error occurred while connecting to MongoDB Atlas...\n',err);
-   }
-   console.log('Connected...');
-   const collection = client.db("test").collection("devices");
-   // perform actions on the collection object
-   client.close();
-});
+mongoose.connect('mongodb://localhost:27017/medicapp')
 
 var db = mongoose.connection;
 
 var Schema = mongoose.Schema;
 
-var userSchema = new Schema({
+var medicineSchema = new Schema({
+	medicineId : {
+		type: String,
+		required : true
+	},
+	quantity : {
+		type : Number,
+		required : true
+	}
+});
+
+var vendorSchema = new Schema({
 	name: {
 		type: String
 	},
@@ -31,29 +33,30 @@ var userSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	priority:{
-		// 0 -> Normal User
-		// 1 -> Owner
-		// 2 -> Admin
-		type: Number,
-		default: 0
-	}
+	latitude : {
+		type: String,
+	},
+	longitude : {
+		type: String,
+	},
+	medicines : [medicineSchema]
 });
 
-userSchema.plugin(uniqueValidator);
+vendorSchema.plugin(uniqueValidator);
 
-var User = module.exports = mongoose.model("User", userSchema);
+var Vendor = module.exports = mongoose.model("Vendor", vendorSchema);
+var Medicine = mongoose.model("Medicine", medicineSchema);
 
-module.exports.createUser = function(newUser, callback) {
+module.exports.createVendor = function(newVendor, callback) {
     bcrypt.hash(newUser.password, SALT_WORK_FACTOR, function(err, hash) {
       if (err) return err;
-      newUser.password = hash;
-      newUser.save(callback);
+      newVendor.password = hash;
+      newVendor.save(callback);
     });
 }
 
-module.exports.getUserByUsername = function(username, callback){
-	User.findOne({username:username}, callback);
+module.exports.getVendorByUsername = function(username, callback){
+	Vendor.findOne({username:username}, callback);
 }
 
 module.exports.comparePassword = function(candidatePassowrd, hash, callback){
@@ -63,35 +66,20 @@ module.exports.comparePassword = function(candidatePassowrd, hash, callback){
     });
 }
 
-module.exports.getUsersExceptAdmin = function(callback) {
-	User.find({
-		priority : {
-			$ne : 94321
-		}
-	}).exec(callback);
+module.exports.getVendorById = function(id, callback) {
+	Vendor.findOne({_id : id}).exec(callback);
 };
 
-module.exports.getUserById = function(id, callback) {
-	User.findOne({_id : id}).exec(callback);
-};
-
-module.exports.deleteUserById = function(user_id, callback){
-	User.remove({_id : user_id}).exec(callback);
-}
-
-module.exports.isPresent = function(userId, callback){
-	User.count({
-		_id : userId
-	}, callback);
-}
-
-module.exports.convert = function(userId, priority, callback){
-	User.update({
-		_id : userId
-	},
-	{
-		$set : {
-			priority : priority
+module.exports.updateMedicineQuantityByVendorId = function(medicineName, id, changeQuantity, callback){
+	Vendor.updateOne(
+		{
+			_id : id,
+			medicine : {$elemMatch : {name : medicineName}}
+		},
+		{
+			$inc : {
+				"medicines.$.quantity" : changeQuantity
+			}
 		}
-	}).exec(callback);
+	);
 }
