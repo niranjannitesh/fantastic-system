@@ -100,9 +100,9 @@ function ensureAuthentication(req, res, next){
 		}
 	else
 	{
-			res.status(401).send({
-        message : "All active sessions must be logged out"
-      });
+		res.redirect('/login', {
+    		message : "All active sessions must be logged out"
+  		});
 	}
 }
 
@@ -120,12 +120,12 @@ router.post("/register", ensureAuthentication, function(req, res, next) {
 			});
 			Doctor.createDoctor(newDoctor, function(err_user, res_user) {
 				if (err_user) {
-					res.status(401).send({
+					res.redirect('/register', {
 		 		    	message : "Username not available"
 					});
 				}
 			    else {
-					res.status(200).send({
+					res.redirect('/login', {
 						message : "Account created successfully",
 				  	})
 				}
@@ -140,12 +140,12 @@ router.post("/register", ensureAuthentication, function(req, res, next) {
 			});
 			Vendor.createVendor(newVendor, function(err_user, res_user) {
 				if (err_user) {
-					res.status(401).send({
+					res.redirect('/register', {
 		 		    	message : "Username not available"
 					});
 				}
 			    else {
-					res.status(200).send({
+					res.redirect('/login', {
 						message : "Account created successfully",
 				  	})
 				}
@@ -161,12 +161,12 @@ router.post("/register", ensureAuthentication, function(req, res, next) {
 			});
 			User.createUser(newUser, function(err_user, res_user) {
 				if (err_user) {
-					res.status(401).send({
+					res.redirect('/register'{
 		 		    	message : "Username not available"
 					});
 				}
 			    else {
-					res.status(200).send({
+					res.redirect('/login', {
 						message : "Account created successfully",
 				  	})
 				}
@@ -185,15 +185,15 @@ router.post('/login', function(req, res, next) {
 				{
 					User.getUserByUsername(req.body.username, function(err_user, res_user){
 						if(err_user){
-							res.status(401).send({
+							res.redirect('login', {
 								message : "No user with specified details available"
 							})
 						}
 						else {
 							req.session.user_id = res_user._id;
 							console.log(res_user);
-							return res.status(200).send({
-						    message : "User successfully logged in",
+							return res.redirect('/', {
+						    	message : "User successfully logged in",
 								details : res_user
 						  })
 						}
@@ -209,15 +209,15 @@ router.post('/login', function(req, res, next) {
 				{
 					Doctor.getDoctorByUsername(req.body.username, function(err_user, res_user){
 						if(err_user){
-							res.status(401).send({
+							res.redirect('login', {
 								message : "No user with specified details available"
-							})
+							});
 						}
 						else {
 							req.session.user_id = res_user._id;
 							console.log(res_user);
-							return res.status(200).send({
-						    message : "User successfully logged in",
+							res.redirect('/', {
+						    	message : "User successfully logged in",
 								details : res_user
 						  })
 						}
@@ -233,15 +233,15 @@ router.post('/login', function(req, res, next) {
 				{
 					Vendor.getVendorByUsername(req.body.username, function(err_user, res_user){
 						if(err_user){
-							res.status(401).send({
+							res.redirect('login', {
 								message : "No user with specified details available"
 							})
 						}
 						else {
 							req.session.user_id = res_user._id;
 							console.log(res_user);
-							return res.status(200).send({
-						    message : "User successfully logged in",
+							res.redirect('/', {
+						    	message : "User successfully logged in",
 								details : res_user
 						  })
 						}
@@ -255,18 +255,18 @@ router.get("/logout", function(req, res) {
 	if(req.session.user_id) {
 	    req.session.destroy(function(err) {
 	      if(err) {
-	        res.send({
-            message : err
-          })
+	        res.redirect('/login', {
+            	message : err
+          	})
 	      } else {
-	        res.status(200).send({
+	        res.redirect('/login', {
 				      message : "Logged out"
 					});
 	      }
 	    });
 	  }
   else {
-    res.status(401).send({
+    res.redirect('login', {
       message : "No active sessions"
     })
 	}
