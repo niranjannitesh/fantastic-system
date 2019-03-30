@@ -1,11 +1,19 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var cors = require('cors')
-
+var express = require("express");
+var path = require("path");
+var favicon = require("serve-favicon");
+var logger = require("morgan");
+var expressValidator = require("express-validator");
+var cookieParser = require("cookie-parser");
+var crypto = require("crypto");
+var session = require("express-session");
+var passport = require("passport");
+var LocalStrategy = require("passport-local").Strategy;
+var bodyParser = require("body-parser");
+var flash = require("connect-flash");
+var mongo = require("mongodb");
+var mongoose = require("mongoose");
+var randomstring = require("randomstring");
+var cors = require('cors');
 
 var db = mongoose.connection;
 
@@ -22,11 +30,10 @@ app.set("view engine", "pug");
 //app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 app.use(logger("dev"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors())
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+app.use(cors())
 
 app.use(session({
     secret:"secret",
