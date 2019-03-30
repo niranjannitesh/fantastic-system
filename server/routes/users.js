@@ -175,10 +175,11 @@ router.post("/register", ensureAuthentication, function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
+	console.log(req.body);
 	let userType = req.body.userType;
 
 	if(userType == "patient"){
-		passport.authenticate('local-patient-login', function(err, user, info) {
+		passport.authenticate('local-user-login', function(err, user, info) {
 		    if (err) { return next(err); }
 		    if (!user) { console.log(info); return res.status(401).send(info); }
 				else
@@ -214,6 +215,7 @@ router.post('/login', function(req, res, next) {
 							})
 						}
 						else {
+							console.log(req);
 							req.session.user_id = res_user._id;
 							console.log(res_user);
 							return res.status(200).send({
